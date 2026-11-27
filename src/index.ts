@@ -21,9 +21,14 @@ export interface TailscaleFunnelOptions {
 
 interface TailscaleStatus {
   Self?: {
+    DNSName?: unknown;
     MagicDNSSuffix?: unknown;
     HostName?: unknown;
     Hostname?: unknown;
+  } | null;
+  MagicDNSSuffix?: unknown;
+  CurrentTailnet?: {
+    MagicDNSSuffix?: unknown;
   } | null;
 }
 
@@ -62,8 +67,17 @@ function getFunnelUrl(): string {
     throw new Error("[tailscale-funnel] Tailscale returned invalid JSON from `tailscale status --json`.");
   }
 
+  const dnsName = status.Self?.DNSName;
+  if (typeof dnsName === "string" && dnsName.trim()) {
+    const normalizedDnsName = dnsName.trim().replace(/\.+$/, "");
+    if (normalizedDnsName) return `https://${normalizedDnsName}`;
+  }
+
   const hostname = status.Self?.Hostname ?? status.Self?.HostName;
-  const suffix = status.Self?.MagicDNSSuffix;
+  const suffix =
+    status.Self?.MagicDNSSuffix ??
+    status.CurrentTailnet?.MagicDNSSuffix ??
+    status.MagicDNSSuffix;
   if (typeof hostname !== "string" || typeof suffix !== "string" || !hostname.trim() || !suffix.trim()) {
     throw new Error(
       `[tailscale-funnel] Tailscale is not connected or its device DNS name is unavailable. ${TAILSCALE_SETUP_MESSAGE}`,
@@ -106,10 +120,9 @@ function tailscaleFunnel(options: TailscaleFunnelOptions = {}): Plugin {
 
   return {
     name: "vite-plugin-tailscale-funnel",
-    apply: "serve",
 
-    config(config) {
-      if (!enabled) return;
+    config(config, { command }) {
+      if (!enabled || command === "build") return;
 
       funnelUrl = getFunnelUrl();
       const hostname = new URL(funnelUrl).hostname;

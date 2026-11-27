@@ -6,6 +6,7 @@ export default defineConfig({
     tailscaleFunnel() as Plugin
   ],
   server: {
-    port: 5176
+    port: 5176,
+    host: '127.0.0.1'
   }
 });
