@@ -1,6 +1,6 @@
 # Tailscale Funnel Vite Plugin
 
-A Vite plugin that starts a [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel) for your local development server and exposes its public HTTPS URL to your app.
+A Vite plugin that starts a [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel) for your local development server and exposes its public HTTPS URL to your app. This project is a direct fork / port of the excellent [vite-plugin-cloudflare-tunnel](https://npmx.dev/package/vite-plugin-cloudflare-tunnel) by Andrew Jefferson ( [eastlondoner](https://github.com/eastlondoner) ), including git history.
 
 ## Requirements
 
@@ -10,12 +10,6 @@ A Vite plugin that starts a [Tailscale Funnel](https://tailscale.com/docs/featur
 - Funnel enabled for your tailnet, with MagicDNS and HTTPS certificates configured
 
 The plugin does not install Tailscale or authenticate on your behalf. If the CLI is missing, it reports an installation and setup hint. On macOS, make sure the Tailscale CLI integration is enabled and its executable is on `PATH`.
-
-## Install
-
-```sh
-npm install vite-plugin-tailscale-funnel --save-dev
-```
 
 ## Usage
 
