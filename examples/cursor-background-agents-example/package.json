@@ -2,7 +2,7 @@
   "name": "cursor-background-agents-example",
   "version": "1.0.0",
   "private": true,
-  "description": "Cursor background agents integration example using Cloudflare Workers and Vite with Cloudflare Tunnel",
+  "description": "Cursor background agents integration using Cloudflare Workers, Vite, and Tailscale Funnel",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.10.2",
-    "vite-plugin-cloudflare-tunnel": "file:../..",
+    "vite-plugin-tailscale-funnel": "file:../..",
     "vite": "^7.0.0",
     "wrangler": "^4.0.0",
     "internal-rules": "file:./rules"

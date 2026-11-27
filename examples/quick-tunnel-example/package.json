@@ -10,6 +10,6 @@
   },
   "devDependencies": {
     "vite": "^7.0.0",
-    "vite-plugin-cloudflare-tunnel": "1.0.8"
+    "vite-plugin-tailscale-funnel": "file:../.."
   }
 }

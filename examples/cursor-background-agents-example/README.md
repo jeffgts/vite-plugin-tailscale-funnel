@@ -1,6 +1,6 @@
 # Cursor Background Agents Example
 
-This example demonstrates how to integrate **Cursor Background Agents** with **Cloudflare Workers**, Vite, and Cloudflare Tunnel. This setup allows you to create a web service that can interact with Cursor's background agent system, providing a bridge between your local development environment and cloud-based AI assistance.
+This example demonstrates how to integrate **Cursor Background Agents** with **Cloudflare Workers**, Vite, and Tailscale Funnel. This setup allows you to create a web service that can interact with Cursor's background agent system, providing a bridge between your local development environment and cloud-based AI assistance.
 
 This example shows how to set up webhooks and API endpoints that can communicate with Cursor's agent system.
 
@@ -9,7 +9,7 @@ This example shows how to set up webhooks and API endpoints that can communicate
 - 🤖 **Cursor Background Agent Integration** - Connect with Cursor's AI agent system
 - ⚡ **Cloudflare Workers backend** - serverless, scalable, and fast
 - 🔐 **Secure API endpoints** with proper authentication
-- 🌐 **Public HTTPS endpoint** via Cloudflare Tunnel
+- 🌐 **Public HTTPS endpoint** via Tailscale Funnel
 - 📊 **Real-time agent interaction dashboard** showing AI requests and responses
 - 🚀 **Easy setup** with step-by-step instructions
 - 🔧 **Handles multiple agent interactions**: code analysis, suggestions, automation
@@ -32,7 +32,7 @@ npm install
 
 ```bash
 cp env.example .env
-# Edit .env with your Cloudflare API token (and optionally TUNNEL_HOSTNAME)
+# Edit .env with the credentials required by the example
 ```
 
 ### 3. Start the Development Servers
@@ -43,10 +43,10 @@ npm run dev
 
 This will start both:
 - **Wrangler dev server** (port 8787) - Your Cloudflare Worker
-- **Vite dev server** (port 3000) - Your frontend with Cloudflare Tunnel
+- **Vite dev server** (port 3000) - Your frontend exposed through Tailscale Funnel
 
-The Cloudflare Tunnel will automatically:
-- Create a public HTTPS URL (e.g., `https://cursor-agents-demo.yourdomain.com`)
+Tailscale Funnel will:
+- Expose your device's Tailscale HTTPS URL
 - Proxy requests to your local Cloudflare Worker
 - Serve the web interface for agent interaction monitoring
 
@@ -173,14 +173,14 @@ async function handleAgentRequest(request: Request, env: Env): Promise<Response>
 
 ```typescript
 // Example: Virtual module usage in client
-import { getTunnelUrl } from 'virtual:vite-plugin-cloudflare-tunnel';
+import { getTunnelUrl } from 'virtual:vite-plugin-tailscale-funnel';
 
 const tunnelUrl = getTunnelUrl(); // Fully typed!
 ```
 
 ### TypeScript Configuration
 The `tsconfig.json` includes:
-- **Virtual module types** from `vite-plugin-cloudflare-tunnel/virtual`
+- **Virtual module types** from `vite-plugin-tailscale-funnel/virtual`
 - **Strict TypeScript settings** for maximum type safety
 - **Vite client types** for development features
 
@@ -198,10 +198,8 @@ The included web interface provides:
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `CLOUDFLARE_API_KEY` | Cloudflare API token for tunnel | ✅ Yes |
 | `CURSOR_API_KEY` | Cursor API key for agent authentication | ✅ Yes |
 | `OPENAI_API_KEY` | OpenAI API key for AI services | ✅ Yes |
-| `TUNNEL_HOSTNAME` | (Optional) Custom hostname for Cloudflare Tunnel | No |
 
 ## 🐛 Troubleshooting
 
@@ -211,8 +209,7 @@ The included web interface provides:
 - Verify the webhook URL is properly configured in Cursor settings
 
 ### Agent endpoint not reachable
-- Verify your Cloudflare Tunnel is running and accessible
-- Check that your domain DNS is properly configured
+- Verify Tailscale is connected and Funnel is enabled for your tailnet
 - Test the `/health` endpoint to ensure the server is responding
 
 ### No agent responses
@@ -233,17 +230,17 @@ Once your agent service is running and connected, you can:
 - **Implement advanced AI workflows** with multi-step processing
 - **Store agent interaction history** in a database for analytics
 - **Add authentication** and user management for the web interface
-- **Deploy to production** using the same Cloudflare Tunnel setup
+- **Deploy to production** using an appropriate production hosting setup
 - **Scale horizontally** with multiple worker instances
 
 ## 📚 Resources
 
 - [Cursor Editor Documentation](https://cursor.sh/docs)
 - [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
-- [Cloudflare Tunnel Documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/)
+- [Tailscale Funnel Documentation](https://tailscale.com/docs/features/tailscale-funnel)
 - [OpenAI API Documentation](https://platform.openai.com/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 
 ---
 
-**Need help?** Check the troubleshooting section above or refer to the Cursor and Cloudflare documentation for more details.
+**Need help?** Check the troubleshooting section above or refer to the Cursor and Tailscale documentation for more details.

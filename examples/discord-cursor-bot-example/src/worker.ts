@@ -7,7 +7,7 @@
  */
 
 import { InteractionType, InteractionResponseType, verifyKey } from 'discord-interactions';
-import { getTunnelUrl as getVirtualTunnelUrl } from 'virtual:vite-plugin-cloudflare-tunnel';
+import { getTunnelUrl as getVirtualTunnelUrl } from 'virtual:vite-plugin-tailscale-funnel';
 import { CursorApiService, buildCreateAgentInput } from './cursor-service';
 import { 
   COMMAND_NAMES, 

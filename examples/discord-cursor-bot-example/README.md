@@ -1,6 +1,6 @@
 # Discord Cursor Bot Example
 
-This example demonstrates how to create a **Discord bot that manages Cursor background agents** using **Cloudflare Workers**, **KV Storage**, **D1 Database**, Vite, and Cloudflare Tunnel. Users can create and manage Cursor agents directly from Discord through slash commands, with real-time updates posted to Discord threads.
+This example demonstrates how to create a **Discord bot that manages Cursor background agents** using **Cloudflare Workers**, **KV Storage**, **D1 Database**, Vite, and Tailscale Funnel. Users can create and manage Cursor agents directly from Discord through slash commands, with real-time updates posted to Discord threads.
 
 This combines Discord's [Interactions and Responding documentation](https://discord.com/developers/docs/interactions/receiving-and-responding) with the [Cursor Background Agents API](https://docs.cursor.com/api/agents) for a seamless development workflow.
 
@@ -12,7 +12,7 @@ This combines Discord's [Interactions and Responding documentation](https://disc
 - 📡 **Webhook integration** receives updates from Cursor API and posts to Discord
 - 💾 **D1 Database storage** for agent records and thread relationships
 - ⚡ **Cloudflare Workers backend** - serverless, scalable, and fast
-- 🌐 **Public HTTPS endpoint** via Cloudflare Tunnel
+- 🌐 **Public HTTPS endpoint** via Tailscale Funnel
 - 📊 **Simple web dashboard** to monitor agents across all channels
 - 🛠️ **Local development** with Wrangler and Vite
 - 🎯 **Full TypeScript support** with proper types and interfaces
@@ -110,7 +110,7 @@ npm run dev
 
 This starts both:
 - **Wrangler dev server** (port 8787) - Your Cloudflare Worker
-- **Vite dev server** (port 3003) - Your frontend with Cloudflare Tunnel
+- **Vite dev server** (port 3003) - Your frontend exposed through Tailscale Funnel
 
 ### 6. Configure Discord Bot
 
@@ -203,7 +203,7 @@ wrangler d1 execute discord-cursor-agents --local --command="SELECT * FROM agent
 - `DISCORD_PUBLIC_KEY` - Discord public key for signature verification  
 - `DISCORD_BOT_TOKEN` - Bot token for Discord API calls
 - `CURSOR_API_KEY` - Default Cursor API key (optional - users can set per-channel)
-- `TUNNEL_HOSTNAME` - Custom tunnel hostname (optional)
+- The public URL is derived from your Tailscale device's MagicDNS name.
 
 ### Cloudflare Resources
 - **D1 Database**: Stores agent records and thread relationships
@@ -219,7 +219,7 @@ wrangler d1 execute discord-cursor-agents --local --command="SELECT * FROM agent
 
 ## 🤝 Contributing
 
-This example is part of the `vite-plugin-cloudflare-tunnel` project. See the main README for contribution guidelines.
+This example is part of the `vite-plugin-tailscale-funnel` project. See the main README for plugin usage.
 
 ## 📄 License
 

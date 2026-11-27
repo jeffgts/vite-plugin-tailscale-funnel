@@ -5,7 +5,7 @@
  * and handles webhook notifications from the Cursor API.
  */
 
-import { getTunnelUrl } from 'virtual:vite-plugin-cloudflare-tunnel';
+import { getTunnelUrl } from 'virtual:vite-plugin-tailscale-funnel';
 import type { 
   StoredAgent, 
   ServiceInfo, 

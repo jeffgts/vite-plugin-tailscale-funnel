@@ -1,13 +1,10 @@
 import { defineConfig } from 'vite';
 import { cloudflare } from "@cloudflare/vite-plugin";
-import { cloudflareTunnel } from 'vite-plugin-cloudflare-tunnel';
+import { tailscaleFunnel } from 'vite-plugin-tailscale-funnel';
 
 export default defineConfig({
   plugins: [
-    cloudflareTunnel({
-      tunnelName: 'cursor-background-agents',
-        hostname: process.env.TUNNEL_HOSTNAME || 'cursor-bot.gptkids.app',
-    }),
+    tailscaleFunnel(),
     cloudflare(),
   ],
   server: {

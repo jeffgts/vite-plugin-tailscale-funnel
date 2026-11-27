@@ -1,14 +1,13 @@
 import './style.css'
-import { getTunnelUrl } from 'virtual:vite-plugin-cloudflare-tunnel';
+import { getTunnelUrl } from 'virtual:vite-plugin-tailscale-funnel';
 
 document.querySelector('#app').innerHTML += `
   <div style="margin-top: 2rem;">
     <h3>🚀 How it works:</h3>
     <ol>
-      <li>Plugin detects no <code>hostname</code> option</li>
-      <li>Automatically switches to quick tunnel mode</li>
-      <li>Spawns <code>cloudflared tunnel --url http://localhost:3000</code></li>
-      <li>Parses the generated URL from stdout</li>
+      <li>Plugin reads your device name and MagicDNS suffix from Tailscale</li>
+      <li>Starts <code>tailscale funnel</code> for the local Vite port</li>
+      <li>Routes public HTTPS traffic to your development server</li>
       <li>Your local dev server is now publicly accessible!</li>
     </ol>
     

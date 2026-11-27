@@ -1,4 +1,4 @@
-# Contributing to Cloudflare Tunnel Vite Plugin
+# Contributing to Tailscale Funnel Vite Plugin
 
 Thank you for your interest in contributing! This guide will help you get started.
 
@@ -15,11 +15,7 @@ Thank you for your interest in contributing! This guide will help you get starte
    npm install
    ```
 
-3. **Set up your environment:**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your Cloudflare API token
-   ```
+3. **Set up Tailscale:** Install the Tailscale CLI, make sure it is on your `PATH`, and authenticate with `tailscale up`.
 
 ## Development Workflow
 

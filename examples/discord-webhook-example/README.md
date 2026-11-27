@@ -1,6 +1,6 @@
 # Discord Bot Webhook Receiver
 
-This example demonstrates how to create a **Discord bot interaction webhook receiver** using **Cloudflare Workers**, Vite, and Cloudflare Tunnel. When users interact with your Discord bot (slash commands, buttons, etc.), Discord will send HTTP requests to your Cloudflare Worker through the tunnel.
+This example demonstrates how to create a **Discord bot interaction webhook receiver** using **Cloudflare Workers**, Vite, and Tailscale Funnel. When users interact with your Discord bot (slash commands, buttons, etc.), Discord will send HTTP requests to your Cloudflare Worker through the Funnel URL.
 
 This follows Discord's [Interactions and Responding documentation](https://discord.com/developers/docs/interactions/receiving-and-responding) for receiving webhook interactions.
 
@@ -9,7 +9,7 @@ This follows Discord's [Interactions and Responding documentation](https://disco
 - 🤖 **Receives Discord bot interactions** via webhooks
 - ⚡ **Cloudflare Workers backend** - serverless, scalable, and fast
 - 🔐 **Signature verification** using Discord's public key
-- 🌐 **Public HTTPS endpoint** via Cloudflare Tunnel
+- 🌐 **Public HTTPS endpoint** via Tailscale Funnel
 - 📊 **Real-time interaction dashboard** showing received commands
 - 🚀 **Easy bot setup** with step-by-step instructions
 - 🔧 **Handles multiple interaction types**: slash commands, buttons, modals
@@ -32,7 +32,7 @@ npm install
 
 ```bash
 cp env.example .env
-# Edit .env with your Cloudflare API token (and optionally TUNNEL_HOSTNAME)
+# Edit .env with the credentials required by the example
 ```
 
 ### 3. Start the Development Servers
@@ -43,10 +43,10 @@ npm run dev
 
 This will start both:
 - **Wrangler dev server** (port 8787) - Your Cloudflare Worker
-- **Vite dev server** (port 3000) - Your frontend with Cloudflare Tunnel
+- **Vite dev server** (port 3000) - Your frontend exposed through Tailscale Funnel
 
-The Cloudflare Tunnel will automatically:
-- Create a public HTTPS URL (e.g., `https://discord-bot-demo.yourdomain.com`)
+Tailscale Funnel will:
+- Expose your device's Tailscale HTTPS URL
 - Proxy requests to your local Cloudflare Worker
 - Serve the web interface for bot setup and monitoring
 
@@ -178,14 +178,14 @@ async function handleDiscordInteraction(request: Request, env: Env): Promise<Res
 
 ```typescript
 // Example: Virtual module usage in client
-import { getTunnelUrl } from 'virtual:vite-plugin-cloudflare-tunnel';
+import { getTunnelUrl } from 'virtual:vite-plugin-tailscale-funnel';
 
 const tunnelUrl = getTunnelUrl(); // Fully typed!
 ```
 
 ### TypeScript Configuration
 The `tsconfig.json` includes:
-- **Virtual module types** from `vite-plugin-cloudflare-tunnel/virtual`
+- **Virtual module types** from `vite-plugin-tailscale-funnel/virtual`
 - **Strict TypeScript settings** for maximum type safety
 - **Vite client types** for development features
 
@@ -203,8 +203,6 @@ The included web interface provides:
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `CLOUDFLARE_API_KEY` | Cloudflare API token for tunnel | ✅ Yes |
-| `TUNNEL_HOSTNAME` | (Optional) Custom hostname for Cloudflare Tunnel | No |
 
 ## 🐛 Troubleshooting
 
@@ -213,8 +211,7 @@ The included web interface provides:
 - Check that Discord is sending requests to the correct URL
 
 ### Webhook endpoint not reachable
-- Verify your Cloudflare Tunnel is running and accessible
-- Check that your domain DNS is properly configured
+- Verify Tailscale is connected and Funnel is enabled for your tailnet
 - Test the `/health` endpoint to ensure the server is responding
 
 ### Commands not appearing in Discord
@@ -235,14 +232,14 @@ Once your bot is receiving interactions, you can:
 - **Implement button interactions** and message components
 - **Store interaction data** in a database
 - **Add authentication** for the web interface
-- **Deploy to production** using the same Cloudflare Tunnel setup
+- **Deploy to production** using an appropriate production hosting setup
 
 ## 📚 Resources
 
 - [Discord Interactions Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding)
 - [Discord Developer Portal](https://discord.com/developers/applications)
 - [discord-interactions NPM Package](https://www.npmjs.com/package/discord-interactions)
-- [Cloudflare Tunnel Documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/)
+- [Tailscale Funnel Documentation](https://tailscale.com/docs/features/tailscale-funnel)
 
 ---
 

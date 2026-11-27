@@ -1,14 +1,10 @@
 import { defineConfig } from 'vite';
-import cloudflareTunnel from 'vite-plugin-cloudflare-tunnel';
+import tailscaleFunnel from 'vite-plugin-tailscale-funnel';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    // Quick tunnel mode - no hostname or API token required!
-    // This will generate a random trycloudflare.com URL
-    cloudflareTunnel({
-      debug: false,
-    })
+    tailscaleFunnel()
   ],
   server: {
     port: 3000

@@ -1,5 +1,5 @@
 import { InteractionType, InteractionResponseType, verifyKey } from 'discord-interactions';
-import { getTunnelUrl } from 'virtual:vite-plugin-cloudflare-tunnel';
+import { getTunnelUrl } from 'virtual:vite-plugin-tailscale-funnel';
 import type { StoredInteraction, Task, CreateTaskInput, TaskListResponse } from "./types";
 
 // Cloudflare D1 types (available in @cloudflare/workers-types)
@@ -918,7 +918,7 @@ export default {
           const tunnelUrl = await getTunnelUrl();
           return okJson({ 
             tunnelUrl,
-            source: 'virtual:vite-plugin-cloudflare-tunnel'
+            source: 'virtual:vite-plugin-tailscale-funnel'
           });
         } catch (error) {
           return errorJson(
@@ -1172,11 +1172,11 @@ async function handleDiscordInteraction(request: Request, env: Env): Promise<Res
     const dmMessage = await discordApiRequest(`/channels/${dmChannelData.id}/messages`, {
       method: 'POST',
       body: {
-        content: "🎉 **Welcome to the Cloudflare Tunnel Bot!**",
+        content: "🎉 **Welcome to the Tailscale Funnel Bot!**",
         embeds: [
           {
             title: "✨ Authorization Successful!",
-            description: "You've been successfully authorized to use this bot. This powerful integration connects **Discord** with **Cloudflare Workers** through **Cloudflare Tunnel**!\n\n🚀 **What you can do now:**",
+            description: "You've been successfully authorized to use this bot. This powerful integration connects **Discord** with **Cloudflare Workers** through **Tailscale Funnel**!\n\n🚀 **What you can do now:**",
             color: 0xF38020, // Cloudflare orange
             fields: [
               {
@@ -1201,7 +1201,7 @@ async function handleDiscordInteraction(request: Request, env: Env): Promise<Res
               }
             ],
             footer: {
-              text: "Built with Cloudflare Tunnel + Vite Plugin",
+              text: "Built with Tailscale Funnel + Vite Plugin",
               icon_url: "https://developers.cloudflare.com/assets/cf-logo-v-rgb-rev.png"
             },
             timestamp: new Date().toISOString()
@@ -1595,7 +1595,7 @@ async function handleDiscordInteraction(request: Request, env: Env): Promise<Res
         response = {
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `Hello! You used the \`/${data?.name || 'unknown'}\` command. This response came from your Cloudflare Worker via Cloudflare Tunnel! 🎉🔥\n\n**TypeScript Demo**: This worker uses proper TypeScript types and the virtual module for tunnel URL access.`,
+            content: `Hello! You used the \`/${data?.name || 'unknown'}\` command. This response came from your Cloudflare Worker via Tailscale Funnel! 🎉🔥\n\n**TypeScript Demo**: This worker uses proper TypeScript types and the virtual module for tunnel URL access.`,
           },
         };
       }
@@ -1706,7 +1706,7 @@ async function handleDiscordInteraction(request: Request, env: Env): Promise<Res
                 fields: [
                   {
                     name: "🏗️ Architecture",
-                    value: "**Cloudflare Workers** + **Cloudflare Tunnel** + **TypeScript**",
+                    value: "**Cloudflare Workers** + **Tailscale Funnel** + **TypeScript**",
                     inline: false
                   },
                   {
@@ -1726,12 +1726,12 @@ async function handleDiscordInteraction(request: Request, env: Env): Promise<Res
                   },
                   {
                     name: "📚 Learn More",
-                    value: "[Cloudflare Tunnel Docs](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/)\n[Discord Developer Portal](https://discord.com/developers/docs)",
+                    value: "[Tailscale Funnel Docs](https://tailscale.com/docs/features/tailscale-funnel)\n[Discord Developer Portal](https://discord.com/developers/docs)",
                     inline: false
                   }
                 ],
                 footer: {
-                  text: "Built with ❤️ using Cloudflare Tunnel Vite Plugin"
+                  text: "Built with ❤️ using Tailscale Funnel Vite Plugin"
                 }
               }
             ],
@@ -1743,7 +1743,7 @@ async function handleDiscordInteraction(request: Request, env: Env): Promise<Res
         response = {
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `🤔 **Unknown button interaction!**\n\nButton ID: \`${buttonId || 'undefined'}\`\n\nThis response came from your Cloudflare Worker via Cloudflare Tunnel! 🚀⚡`,
+            content: `🤔 **Unknown button interaction!**\n\nButton ID: \`${buttonId || 'undefined'}\`\n\nThis response came from your Cloudflare Worker via Tailscale Funnel! 🚀⚡`,
             flags: 64 // Ephemeral message (only visible to the user)
           },
         };

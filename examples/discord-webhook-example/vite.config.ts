@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite';
 import { cloudflare } from "@cloudflare/vite-plugin";
-import { cloudflareTunnel } from 'vite-plugin-cloudflare-tunnel';
+import { tailscaleFunnel } from 'vite-plugin-tailscale-funnel';
 
 export default defineConfig({
   plugins: [
-    cloudflareTunnel({
-        hostname: process.env.TUNNEL_HOSTNAME || 'discord-bot.gptkids.app',
-    }),
+    tailscaleFunnel(),
     cloudflare(),
   ],
   server: {

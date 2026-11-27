@@ -47,7 +47,7 @@ mkdir src public scripts
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.10.2",
-    "vite-plugin-cloudflare-tunnel": "file:../..",
+    "vite-plugin-tailscale-funnel": "file:../..",
     "vite": "^7.0.0",
     "wrangler": "^4.0.0"
   }

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Test script to verify cloudflared process cleanup
+ * Test script to verify Tailscale Funnel process cleanup
  * This script starts a Vite dev server and then terminates it
- * in various ways to ensure cloudflared is properly cleaned up.
+ * in various ways to ensure the foreground Funnel process is properly cleaned up.
  */
 
 import { spawn } from 'child_process';
@@ -23,14 +23,14 @@ async function testCleanup(signal = 'SIGTERM') {
   // Monitor output
   vite.stdout.on('data', (data) => {
     const output = data.toString();
-    if (output.includes('cloudflared')) {
+    if (output.includes('tailscale-funnel')) {
       console.log(`🌐 ${output.trim()}`);
     }
   });
   
   vite.stderr.on('data', (data) => {
     const output = data.toString();
-    if (output.includes('cloudflared')) {
+    if (output.includes('tailscale-funnel')) {
       console.log(`⚠️  ${output.trim()}`);
     }
   });
@@ -39,12 +39,12 @@ async function testCleanup(signal = 'SIGTERM') {
   console.log('⏳ Waiting for tunnel to start...');
   await sleep(10000);
   
-  // Check for cloudflared processes before termination
-  console.log('🔍 Checking for cloudflared processes before termination...');
-  const beforePs = spawn('pgrep', ['-f', 'cloudflared'], { stdio: 'pipe' });
+  // Check for Funnel processes before termination
+  console.log('🔍 Checking for Tailscale Funnel processes before termination...');
+  const beforePs = spawn('pgrep', ['-f', '[t]ailscale funnel'], { stdio: 'pipe' });
   beforePs.stdout.on('data', (data) => {
     const pids = data.toString().trim().split('\n').filter(Boolean);
-    console.log(`📊 Found ${pids.length} cloudflared process(es): ${pids.join(', ')}`);
+    console.log(`📊 Found ${pids.length} Tailscale Funnel process(es): ${pids.join(', ')}`);
   });
   
   await sleep(2000);
@@ -57,22 +57,22 @@ async function testCleanup(signal = 'SIGTERM') {
   console.log('⏳ Waiting for cleanup...');
   await sleep(5000);
   
-  // Check for remaining cloudflared processes
-  console.log('🔍 Checking for remaining cloudflared processes...');
-  const afterPs = spawn('pgrep', ['-f', 'cloudflared'], { stdio: 'pipe' });
+  // Check for remaining Funnel processes
+  console.log('🔍 Checking for remaining Tailscale Funnel processes...');
+  const afterPs = spawn('pgrep', ['-f', '[t]ailscale funnel'], { stdio: 'pipe' });
   
   let foundProcesses = false;
   afterPs.stdout.on('data', (data) => {
     const pids = data.toString().trim().split('\n').filter(Boolean);
     if (pids.length > 0) {
-      console.log(`❌ Found ${pids.length} orphaned cloudflared process(es): ${pids.join(', ')}`);
+      console.log(`❌ Found ${pids.length} orphaned Tailscale Funnel process(es): ${pids.join(', ')}`);
       foundProcesses = true;
     }
   });
   
   afterPs.on('close', (code) => {
     if (code !== 0 && !foundProcesses) {
-      console.log('✅ No orphaned cloudflared processes found!');
+      console.log('✅ No orphaned Tailscale Funnel processes found!');
     }
   });
   
@@ -80,8 +80,8 @@ async function testCleanup(signal = 'SIGTERM') {
 }
 
 async function main() {
-  console.log('🚀 Testing Cloudflare Tunnel Vite Plugin Process Cleanup');
-  console.log('This test verifies that cloudflared processes are properly cleaned up');
+  console.log('🚀 Testing Tailscale Funnel Vite Plugin Process Cleanup');
+  console.log('This test verifies that the Funnel process is properly cleaned up');
   console.log('when the parent Vite process is terminated in various ways.\n');
   
   // Test different termination signals

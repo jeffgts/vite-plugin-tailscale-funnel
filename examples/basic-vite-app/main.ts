@@ -1,5 +1,5 @@
 import './style.css';
-import { getTunnelUrl } from 'virtual:vite-plugin-cloudflare-tunnel';
+import { getTunnelUrl } from 'virtual:vite-plugin-tailscale-funnel';
 
 document.querySelector('#app');
 
@@ -17,7 +17,7 @@ function updateStatus() {
                         document.location.hostname !== '127.0.0.1';
     
     if (isCloudflare) {
-      statusEl.textContent = '🟢 Connected via Cloudflare Tunnel';
+      statusEl.textContent = '🟢 Connected via Tailscale Funnel';
       tunnelUrlEl.textContent = tunnelUrl;
       statusEl.style.color = 'green';
       
@@ -55,7 +55,7 @@ document.getElementById('refresh').addEventListener('click', () => {
 updateStatus();
 
 // Log some helpful info
-console.log('🌐 Cloudflare Tunnel Plugin Example');
+console.log('🌐 Tailscale Funnel Plugin Example');
 console.log('Current URL:', window.location.href);
 console.log('User Agent:', navigator.userAgent);
 
