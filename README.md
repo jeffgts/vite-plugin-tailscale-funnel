@@ -1,3 +1,5 @@
+## *Warning! This is an experimental plugin ported by co-pilot, here be dragons, etc.*
+
 # Tailscale Funnel Vite Plugin
 
 A Vite plugin that starts a [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel) for your local development server and exposes its public HTTPS URL to your app. This project is a direct fork / port of the excellent [vite-plugin-cloudflare-tunnel](https://npmx.dev/package/vite-plugin-cloudflare-tunnel) by Andrew Jefferson ( [eastlondoner](https://github.com/eastlondoner) ), including git history.
