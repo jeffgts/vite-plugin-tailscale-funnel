@@ -68,7 +68,7 @@ Add the provided types to your `tsconfig.json`:
 }
 ```
 
-When `enabled: false`, `getTunnelUrl()` returns an empty string. The virtual module is intended for development and is not included in production builds.
+When `enabled: false` or when running a production build, `getTunnelUrl()` returns an empty string.
 
 ## Troubleshooting
 
